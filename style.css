@@ -4,49 +4,63 @@ html, body{
     background-color: rgb(203, 209, 222);
     margin: 0px;
     padding: 0px;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: 'Comfortaa', cursive;
+    overflow-y: overlay;
+    background-image: repeating-linear-gradient(to bottom, #000000, #361929, #5e2d5b, #794a9d, #7372eb);
+    
 }
 
 body{
     display: flex;
     flex-direction: column;
+    
 }
 
 .nav-bar{
     box-sizing: border-box;
     min-height: 60px;
-    background-color: #2f2f94;
-    border-bottom: 1px solid;
     display: flex;
     align-items: center;
-    padding: 8px;
+    padding: 10px;
     color: whitesmoke;
     justify-content: space-between;
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+    background-color: #000000;
 }
 
 .app-title{
-    font-size: x-large;
+    font-size: xx-large;
+    color: #fff;
+  text-align: center;
+  margin: 10px;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #d700e6, 0 0 20px #d700e6, 0 0 25px #d700e6, 0 0 30px #d700e6, 0 0 35px #d700e6;
 }
 
 .todos-container{
     flex-grow: 1;
-    background-color:whitesmoke;
     box-sizing: border-box;
-    color: #020224;
+    color: whitesmoke;
+    margin-top: 70px;
 }
+
 
 .add-button{
     position: fixed;
-    bottom: 8px;
-    right: 8px;
+    bottom: 10px;
+    right: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 50px;
     width: 50px;
     border-radius: 50%;
-    border: 2.5px solid #2f2f94;
-    background-color: transparent;
+    background: rgba(0, 0, 0, 0.3);
+backdrop-filter: blur(1px) saturate(180%);
+-webkit-backdrop-filter: blur(20px);
+border: 2px solid rgba(255, 255, 255, 3);
+border-color: black
 }
 
 .refresh-button{
@@ -58,38 +72,66 @@ body{
     display: flex;
     flex-direction: column;
     padding: 16px;
-    border-bottom: 1px solid #2f2f94;
     gap: 6px;
+    border-radius: 8px 70px 70px 70px;
+    margin: 10px;
+    padding-left: 40px;
+    padding-right: 30px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    color: whitesmoke;
+background: rgba(255, 255, 255, 0.14);
+backdrop-filter: blur(10px) saturate(180%);
+-webkit-backdrop-filter: blur(20px);
+border: 1px solid rgba(255, 255, 255, 0);
 }
 
 .divider{
-    background-color:#2f2f94;
-    width: 100%;
-    height: 2.5px;
+    height: 20px;
+    width: 20px;  
+    border-radius: 50%; 
+    display: flex;
+    align-self:flex-start;
+    margin-left: -30px;
+    margin-top: -20px;
+    box-shadow: 1px 1.5px #000000;
 }
 
 .tag{
-    border:1px solid  #2f2f94;
-    padding: 4px;
-    border-radius: 16px;
-    background-color: #2f2f94;
+
+    margin-top: 8px;
+    margin-bottom: 8px;
     color: whitesmoke;
+    padding-right: 8px;
     font-size: small;
+    text-transform: uppercase;
+    text-shadow: 0 0 5px rgb(170, 168, 168), 0 0 10px rgb(170, 168, 168), 0 0 15px #d700e669, 0 0 20px #d700e669, 0 0 25px #d700e669, 0 0 30px #d700e669, 0 0 35px #d700e669;
 }
 
 .todo-name{
     font-size: large;
     font-weight: bold;
+    color: whitesmoke;
+    text-shadow: 2px 2px #000000;
+    margin-top: -5px;
 }
 
 .buttons-container *{
     border-style: none;
     background: transparent;
     cursor: pointer;
+
 }
 
 .buttons-container{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    border-top: 1px solid rgba(245, 245, 245, 0.219);
+    padding-top: 10px;
+    margin-top: 10px;
 }
+
+
+  
+ 
