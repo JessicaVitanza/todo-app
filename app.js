@@ -3,9 +3,24 @@ const BASE_URL = 'https://628778b1e9494df61b39b038.mockapi.io/todos'
 let todosArray = [];
 
 
-function goToTodoPage() {
-  window.location.href = "/todo.html";
+function goToTodoPage(id){
+  let urlString = "/todo.html"
+  if(id){
+    urlString = urlString + '?id=' + id;
+  }
+  window.location.href = urlString;
 }
+
+
+// function goToTodoPage2(todo) {
+//   let urlString = "/todo.html"
+//   if(todo){
+//    const todoString = JSON.stringify(todo);
+//    sessionStorage.setItem('selectedTodo', todoString);
+//   }
+//   window.location.href = urlString;
+// }
+
 
 function populateTagContainer(container, tags){
   for (const tag of tags) {
@@ -39,6 +54,8 @@ function createTodoCard(todo){
   return todoHtml;
 }
 
+
+
 function startLoading(){
   const loader = document.getElementById('loader')
   loader.style.display = 'inline-block'
@@ -65,10 +82,7 @@ function removeTodoAndRefesh(todo){
 
 function deleteTodo(id){
 
-  if (!confirm("Premi 'Ok' per cancellare")){
-    return false}
-  
-
+  if (confirm("Premi 'Ok' per cancellare")){
   startLoading()
   const deleteUrl = BASE_URL + '/' + id;
   const fetchOptions = {method: 'delete'};
@@ -76,6 +90,7 @@ function deleteTodo(id){
   .then(response => response.json())
   .then(result => removeTodoAndRefesh(result))
   .catch(error => stopLoading())
+  }
 }
 
 function displayTodos(todos){
@@ -97,6 +112,9 @@ function displayTodos(todos){
 
     const deleteButton = todoCard.querySelector('.delete-button');
     deleteButton.onclick = () => deleteTodo(todo.id);
+
+    const editButton = todoCard.querySelector('.edit-button');
+    editButton.onclick = () => goToTodoPage(todo.id);
 
     const divider = todoCard.querySelector('.divider');
     divider.style.backgroundColor = todo.priority.color;
@@ -120,11 +138,16 @@ function displayTodos(todos){
   
 }
 
+
+
+
 function initTodos(todos){
   stopLoading();
   todosArray = todos.map(obj => Todo.fromDbObj(obj));
+  todosArray.sort(Todo.orderTodoByPriority);
   displayTodos(todosArray);
 }
+
 
 function loadTodos(){
   startLoading()
