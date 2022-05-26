@@ -1,0 +1,12 @@
+html, body{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(203, 209, 222);
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Comfortaa', cursive;
+    overflow-y: overlay;
+   background-image: repeating-linear-gradient(to bottom, #000000, #361929, #5e2d5b, #794a9d, #7372eb);
+
+}
+
