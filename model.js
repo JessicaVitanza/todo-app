@@ -22,17 +22,30 @@ class Todo{
     this._creationDate = date.getTime();
   }
 
+  set priorityOrder(order){
+    if (order === 0) {
+      this.priority = Todo.PRIORITY.low;
+    } else if (order === 1) {
+      this.priority = Todo.PRIORITY.medium;
+    } else if (order === 2) {
+      this.priority = Todo.PRIORITY.high;
+    } else if (order === 3) {
+      this.priority = Todo.PRIORITY.veryHigh;
+    }
+  }
+
+
   static fromDbObj(obj){
     const todo = new Todo(obj.name, obj.tags, new Date(obj.creationDate * 1000));
     todo.id = obj.id;
-    if (obj.priority === 1) {
-      todo.priority = Todo.PRIORITY.medium;
-    } else if (obj.priority === 2) {
-      todo.priority = Todo.PRIORITY.high;
-    } else if (obj.priority === 3) {
-      todo.priority = Todo.PRIORITY.veryHigh;
-    }
+    todo.priorityOrder = obj.priority;
     return todo;
+  }
+
+
+  todoDbObj(){
+    const obj = {name: this.name, tags: this.tags, priority: this.priority.order, creationDate: this._creationDate/1000}
+    return obj;
   }
 
   static orderTodoByPriority(t1, t2) {
