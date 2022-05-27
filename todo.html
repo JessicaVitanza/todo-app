@@ -10,16 +10,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
 </head>
-
-
-<header class="nav-bar">
-    <strong class="app-title">TO DO &nbsp APP</strong>
+<body>
+  <header class="nav-bar">
+    <strong class="app-title">ToDo App</strong>
     <button id="refresh-button" onclick="goHome()">
       <img width="30px" src="./assets/home.svg" alt="">
     </button>
   </header>
   <div class="todo-container">
-    <h2 id="page-title">Inserisci il nuovo Todo</h2>
+    <h2 id="page-title">Inserisci nuovo Todo</h2>
     <strong class="section-title">Nome</strong>
     <input type="text" name="name-input" id="name-input" class="bar-input">
     <strong class="section-title">Tag</strong>
@@ -37,9 +36,10 @@
       <span class="chip priority" onclick="changePriority(2)">alta</span>
       <span class="chip priority" onclick="changePriority(3)">molto alta</span>
     </div>
-    <button onclick="saveTodo()" class="save-button">SAVE</button>
+    <button onclick="saveTodo()" class="save-button">save</button>
   </div>
 </body>
 <script src="./model.js"></script>
 <script src="./todo.js"></script>
+
 </html>

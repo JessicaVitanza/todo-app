@@ -123,6 +123,7 @@ html, body{
     padding: 8px;
     height: 30px;
     font-family: 'Comfortaa', cursive;
+    text-transform: uppercase;
     font-size: x-small;
     margin-top: 20px;
   }

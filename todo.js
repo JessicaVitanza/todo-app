@@ -1,3 +1,8 @@
+const BASE_URL = 'https://628b2f12667aea3a3e290de6.mockapi.io/todos'
+
+let selectedTodo = new Todo('new todo');
+
+const params = parseUrlParams();
 // function parseUrlParams(){
 //   const url = window.location.href;
 //   console.log('URL', url);
@@ -21,12 +26,7 @@
 //   }
 // }
 
-const BASE_URL = 'https://628778b1e9494df61b39b038.mockapi.io/todos'
-
-let selectedTodo = new Todo ('new todo');
-
-
-function goHome(){
+function goHome() {
   window.location.href = './'
 }
 
@@ -34,78 +34,37 @@ function parseUrlParams() {
   const urlSearchParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlSearchParams.entries());
   return params;
+  //console.log('params', params);
 }
 
 function changeTitle() {
-    const pageTitle = document.getElementById('page-title');
-    pageTitle.innerHTML = 'Modifica il titolo'
+  const pageTitle = document.getElementById('page-title');
+  pageTitle.innerHTML = 'Modifica Todo'
 }
 
-
-function loadSelectedTodo(id){
+function loadSelectedTodo(id) {
   const todoUrl = BASE_URL + '/' + id;
   fetch(todoUrl)
   .then(resp => resp.json())
-  .then(result => initSeceltedTodo(result));
+  .then(result => initSelectedTodo(result));
 }
 
-
-function initSeceltedTodo(obj) {
+function initSelectedTodo(obj){
   const todo = Todo.fromDbObj(obj);
   selectedTodo = todo;
-  fillForm(selectedTodo); 
+  fillForm(selectedTodo);
 }
 
 function colorTags(selectedTags){
   const tags = document.getElementsByClassName('tag');
   for (const tagSpan of tags) {
     if (selectedTags.includes(tagSpan.innerHTML)) {
-      tagSpan.style.backgroundColor = '#794a9d';
+      tagSpan.style.backgroundColor = 'crimson';
     } else {
-      tagSpan.style.backgroundColor = '#1e1c1c7c';
+      tagSpan.style.backgroundColor = '#414141';
     }
   }
 }
-
-
-function addOrRemoveTag(tag){
-  if(selectedTodo.tags.includes(tag)){
-    selectedTodo.tags = selectedTodo.tags.filter(t => filterTags(t, tag));
-  } else {
-    selectedTodo.tags.push(tag);
-  }
-  colorTags(selectedTodo.tags);
-}
-
-function filterTags(t1, t2) {
-  return t1 !== t2;
-}
-
-
-function saveTodo(){
-
-
-
-  const nameInput = document.getElementById('name-input');
-  const name = nameInput.value.trim();
-  if (name) {
-    selectedTodo.name = name;
-    const dbObj = selectedTodo.todoDbObj();
-    const dbObjJson = JSON.stringify(dbObj);
-    const url = BASE_URL + '/' + params.id;
-    const fetchOptions = {method: 'put', body: dbObjJson, headers: {'Content-Type': 'application/json'}}
-    fetch(url, fetchOptions).then(resp => resp.json()).then(res => goHome())
-
-  } else {
-    alert('Non posso salvare un Todo senza nome')
-  }
-}
-
-function changePriority(priority) {
- selectedTodo.priorityOrder = priority;
- colorPriority(selectedTodo.priority);
-}
-
 
 function colorPriority(priority){
   const priorities = document.getElementsByClassName('priority');
@@ -113,11 +72,28 @@ function colorPriority(priority){
     if (priority.name === prioritySpan.innerHTML) {
       prioritySpan.style.backgroundColor = priority.color;
     } else {
-      prioritySpan.style.backgroundColor = '#1e1c1c7c';
+      prioritySpan.style.backgroundColor = '#414141'
     }
   }
 }
 
+function addOrRemoveTag(tag){
+  if (selectedTodo.tags.includes(tag)) {
+    selectedTodo.tags = selectedTodo.tags.filter(t => filterTags(t, tag));
+  } else {
+    selectedTodo.tags.push(tag);
+  }
+  colorTags(selectedTodo.tags);
+}
+
+function changePriority(priority) {
+  selectedTodo.priorityOrder = priority;
+  colorPriority(selectedTodo.priority);
+}
+
+function filterTags(t1, t2){
+  return t1 !== t2;
+}
 
 function fillForm(todo){
   const nameInput = document.getElementById('name-input');
@@ -126,13 +102,60 @@ function fillForm(todo){
   colorPriority(todo.priority);
 }
 
-const params = parseUrlParams();
-if (params.id) {
-  changeTitle();
-  loadSelectedTodo(params.id);
-} else {
-  fillForm()
+function saveTodo(){
+  const nameInput = document.getElementById('name-input');
+  const name = nameInput.value.trim();
+
+  if (name) {
+
+    selectedTodo.name = name;
+    const dbObj = selectedTodo.toDbObj();
+    const dbObjJson = JSON.stringify(dbObj);
+
+    let url;
+    let fetchOptions;
+
+    if (params.id) {
+      
+      url = BASE_URL + '/' + params.id;
+      fetchOptions = {
+        method: 'PUT', body: dbObjJson, headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+    
+    } else {
+
+      url = BASE_URL;
+      fetchOptions = {
+        method: 'post', body: dbObjJson, headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+      
+    }
+
+    fetch(url, fetchOptions)
+      .then(resp => resp.json())
+      .then(res => goHome())
+
+
+  } else {
+    alert('non posso savare un todo senza nome')
+  }
 }
+
+
+
+if (params.id) {
+  changeTitle()
+  loadSelectedTodo(params.id)
+} else {
+  fillForm(selectedTodo);
+}
+
+
+
 
 
 
@@ -146,4 +169,3 @@ if (params.id) {
 
 
 // getTodoFromSessionStorage()
-
